@@ -1,4 +1,4 @@
-
+import 'package:intl/intl.dart';
 
 import 'companion_model.dart';
 
@@ -32,15 +32,19 @@ class TripModal {
   });
 
   static TripModal fromJson(map) {
-    int? budget=int.tryParse(map['budget']);
+    int? budget = int.tryParse(map['budget']);
+    final startDate = DateFormat('yyyy-MM-dd').parse(map['startingDate']);
+    final startingDate = DateFormat.yMMMd().format(startDate);
+    final endDate = DateFormat('yyyy-MM-dd').parse(map['endingDate']);
+    final endingDate = DateFormat.yMMMd().format(endDate);
     return TripModal(
         id: map['id'],
         coverPic: map['coverPic'],
         tripName: map['tripName'],
         destination: map['destination'],
         budget: budget!,
-        startingDate: map['startingDate'],
-        endingDate: map['endingDate'],
+        startingDate: startingDate,
+        endingDate: endingDate,
         transport: map['transport'],
         travelPurpose: map['travelPurpose'],
         notes: map['notes'],

@@ -233,7 +233,8 @@ class _SignupScreenState extends State<SignupScreen> {
       final user = UserModal(
           name: name, mail: mail, password: password, image: image!.path);
 
-      DatabaseHelper.instance.addUser(user);
+      final userid = await DatabaseHelper.instance.addUser(user);
+      user.id = userid;
 
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(

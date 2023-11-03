@@ -77,7 +77,7 @@ class _myTextFieldState extends State<MyDatePicker2> {
         if (value == null) {
           return;
         } else {
-          widget.startController?.text = DateFormat('yyyy-MM-dd').format(value);
+          widget.startController?.text = DateFormat.yMMMd().format(value);
         }
       });
     });
@@ -94,7 +94,7 @@ class _myTextFieldState extends State<MyDatePicker2> {
         if (value == null) {
           return;
         } else {
-          widget.endController?.text = DateFormat('yyyy-MM-dd').format(value);
+          widget.endController?.text = DateFormat.yMMMd().format(value);
         }
       });
     });

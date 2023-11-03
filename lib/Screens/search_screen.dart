@@ -131,8 +131,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                                 child: ListTile(
-                                  // shape: RoundedRectangleBorder(
-                                  //     borderRadius: BorderRadius.circular(50)),
                                   leading: CircleAvatar(
                                     radius: 25,
                                     backgroundImage: trip.coverPic != null
@@ -140,7 +138,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                         : null,
                                   ),
                                   title: Text(
-                                    trip.tripName,
+                                    trip.tripName,  
                                     style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),

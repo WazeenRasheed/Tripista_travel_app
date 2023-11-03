@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../Components/custom_button.dart';
 import '../Components/custom_textfield.dart';
 import '../Components/styles.dart';
@@ -249,8 +250,12 @@ class _AddTripScreenState extends State<AddTripScreen> {
       final tripName = tripNameController.text.trim();
       final destination = destinationController.text.trim();
       int? budget = int.tryParse(budgetController.text);
-      final startingDate = startingDateController.text.trim();
-      final endingDate = endingDateController.text.trim();
+      final startDate =
+          DateFormat.yMMMd().parse(startingDateController.text.trim());
+      final startingDate = DateFormat('yyyy-MM-dd').format(startDate);
+      final endDate =
+          DateFormat.yMMMd().parse(endingDateController.text.trim());
+      final endingDate = DateFormat('yyyy-MM-dd').format(endDate);
       final userID = widget.user.id;
 
       final trip = TripModal(

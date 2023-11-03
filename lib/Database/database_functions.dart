@@ -78,12 +78,13 @@ class DatabaseHelper {
 //..................................USER FUNCTIONS.......................................
 //.......................................................................................
 
-  addUser(UserModal value) async {
+ Future<int> addUser(UserModal value) async {
     int id = await _db.rawInsert(
         'INSERT INTO user (name,mail,password,image,isLogin) VALUES (?,?,?,?,?)',
         [value.name, value.mail, value.password, value.image, 1]);
-    value.id = id;
-    getUser();
+    value.id = id; getUser();
+    return id;
+   
   }
 
   getUser() async {
