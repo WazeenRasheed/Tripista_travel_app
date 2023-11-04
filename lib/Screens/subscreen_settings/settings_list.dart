@@ -35,7 +35,8 @@ class MySettingsList extends StatelessWidget {
       shrinkWrap: true,
       itemCount: 5,
       separatorBuilder: (context, index) => Divider(
-        indent: 46,
+        indent: 30,
+        color: accentColor2,
       ),
       itemBuilder: (context, index) {
         bool hasTrailing =
@@ -81,7 +82,7 @@ class MySettingsList extends StatelessWidget {
               case 4:
                 customDialog(
                   context: context,
-                  text: 'Sign out of your account?',
+                  text: 'Sign out your account?',
                   subText:
                       "Any drafts that you've saved will still be available on this device",
                   signOrClear: 'Sign Out',

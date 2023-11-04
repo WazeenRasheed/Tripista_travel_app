@@ -40,7 +40,7 @@ class UpcomingRecentContainer extends StatelessWidget {
                           )
                         : AssetImage('assets/app_logo.png') as ImageProvider)),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(14, 13, 12, 10),
+              padding: const EdgeInsets.fromLTRB(14, 13, 12, 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

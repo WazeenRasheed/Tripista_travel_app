@@ -35,7 +35,8 @@ Container customGrid(
             ],
           ),
         ),
-        const Divider(thickness: .5, height: 18,indent: 10,endIndent: 10,),
+        const Divider(
+            height: 18, indent: 13, endIndent: 13, color: accentColor2),
         Padding(
             padding: const EdgeInsets.only(top: 3, left: 12),
             child: Text("₹ $amount",

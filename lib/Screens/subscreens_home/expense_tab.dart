@@ -242,6 +242,9 @@ class _ExpenseTabState extends State<ExpenseTab> {
 // bottomsheet
   addExpensesBottomSheet(BuildContext ctx) {
     showModalBottomSheet(
+      showDragHandle: true,
+      backgroundColor: backgroundColor,
+      elevation: 0,
       isScrollControlled: true,
       context: ctx,
       builder: (context) {
@@ -261,9 +264,6 @@ class _ExpenseTabState extends State<ExpenseTab> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
                       Text(
                         'Expense',
                         style: TextStyle(
@@ -277,7 +277,7 @@ class _ExpenseTabState extends State<ExpenseTab> {
                         child: myTextField(
                           controller: expenseController,
                           keyboardType: TextInputType.number,
-                          hintText: '',
+                          hintText: 'Enter amount',
                           validation: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Expense is required';
@@ -335,7 +335,7 @@ class _ExpenseTabState extends State<ExpenseTab> {
                           }).toList(),
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
                       MyButton(
                         backgroundColor: primaryColor,
                         text: 'Add',

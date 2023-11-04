@@ -44,8 +44,9 @@ class _SplashScreenState extends State<SplashScreen> {
   goToLogin() async {
     await Future.delayed(Duration(seconds: 1));
 
-    UserModal? userData = await DatabaseHelper.instance.getUserLogged();
+    UserModal? userData = await DatabaseHelper.instance.getLoggedUser();
 
+    // ignore: unnecessary_null_comparison
     if (userData != null) {
       // User is logged in, navigate to bottomNavigationBar
       Navigator.of(context).pushAndRemoveUntil(

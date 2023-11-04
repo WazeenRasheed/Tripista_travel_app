@@ -145,7 +145,9 @@ class DetailTab extends StatelessWidget {
               SizedBox(
                 height: screenSize.height * 0.01,
               ),
-              Divider(),
+              Divider(
+                color: accentColor2,
+              ),
               SizedBox(
                 height: screenSize.height * 0.01,
               ),
@@ -176,9 +178,11 @@ class DetailTab extends StatelessWidget {
                                 },
                                 child: CircleAvatar(
                                   maxRadius: 22,
+                                  backgroundColor: Colors.blueGrey[700],
                                   child: Text(
                                     companion.name[0],
-                                    style: TextStyle(fontSize: 20),
+                                    style: TextStyle(
+                                        fontSize: 20, color: backgroundColor),
                                   ),
                                 ),
                               ),

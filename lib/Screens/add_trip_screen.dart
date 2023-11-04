@@ -103,7 +103,7 @@ class _AddTripScreenState extends State<AddTripScreen> {
                 //trip name field
                 myTextField(
                   controller: tripNameController,
-                  hintText: 'Enter trip name',
+                  labelText: 'Enter trip name',
                   validation: (value) {
                     if (value == null || value!.isEmpty) {
                       return 'Name required';
@@ -119,7 +119,7 @@ class _AddTripScreenState extends State<AddTripScreen> {
                 //trip destination field
                 myTextField(
                   controller: destinationController,
-                  hintText: 'Enter trip destination',
+                  labelText: 'Enter trip destination',
                   validation: (value) {
                     if (value == null || value!.isEmpty) {
                       return 'Destination required';
@@ -135,7 +135,7 @@ class _AddTripScreenState extends State<AddTripScreen> {
                 //trip budget field
                 myTextField(
                   controller: budgetController,
-                  hintText: 'Enter trip budget',
+                  labelText: 'Enter trip budget',
                   keyboardType: TextInputType.number,
                   validation: (value) {
                     if (value == null || budgetController.text.trim().isEmpty) {

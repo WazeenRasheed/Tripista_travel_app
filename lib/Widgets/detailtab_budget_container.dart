@@ -13,7 +13,7 @@ class BudgetContainer extends StatelessWidget {
       decoration: BoxDecoration(
           border: Border.all(width: 1, color: accentColor),
           borderRadius: BorderRadius.circular(6)),
-      height: screenSize.height * 0.126,
+      height: screenSize.height * 0.1277,
       width: screenSize.width * 0.425,
       child: Padding(
         padding: const EdgeInsets.all(15),
@@ -24,7 +24,7 @@ class BudgetContainer extends StatelessWidget {
               text,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
-            Divider(),
+            Divider(color: accentColor2,),
             Text(
               budgetORexpenses,
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),

@@ -36,10 +36,11 @@ class MyChoiceChip extends StatefulWidget {
 }
 
 class _MyChoiceChipState extends State<MyChoiceChip> {
-  int? _value = 0;
+  int? _value;
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
 
     return Wrap(
       spacing: 8,
@@ -47,9 +48,10 @@ class _MyChoiceChipState extends State<MyChoiceChip> {
         widget.choices.length,
         (int index) {
           return Container(
-            height: 50,
-            width: 112,
+            height: screenSize.height * 0.06,
+            width: screenSize.width * 0.287,
             child: ChoiceChip(
+              showCheckmark: false,
               padding: EdgeInsets.fromLTRB(25, 10, 25, 10),
               avatar: widget.icons[index],
               selectedColor: primaryColor,

@@ -29,15 +29,6 @@ class OngoingTripScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: backgroundColor,
           elevation: 0,
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Icon(
-              Icons.arrow_back,
-              color: primaryColor,
-            ),
-          ),
           title: Text(
             trip.tripName,
             style: TextStyle(color: primaryColor),

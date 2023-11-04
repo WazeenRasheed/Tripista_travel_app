@@ -78,13 +78,13 @@ class DatabaseHelper {
 //..................................USER FUNCTIONS.......................................
 //.......................................................................................
 
- Future<int> addUser(UserModal value) async {
+  Future<int> addUser(UserModal value) async {
     int id = await _db.rawInsert(
         'INSERT INTO user (name,mail,password,image,isLogin) VALUES (?,?,?,?,?)',
         [value.name, value.mail, value.password, value.image, 1]);
-    value.id = id; getUser();
+    value.id = id;
+    getUser();
     return id;
-   
   }
 
   getUser() async {
@@ -124,7 +124,7 @@ class DatabaseHelper {
   }
 
 //when user login make isLogin=1..........................................
-  getUserLogged() async {
+  getLoggedUser() async {
     final user = await _db.query('user', where: 'isLogin=1', limit: 1);
     if (user.length == 0) {
       return null;
@@ -199,7 +199,7 @@ class DatabaseHelper {
     TripModal? obj;
 
     // DateTime currentDate = DateTime.now();
-    String convertedDate =DateFormat('yyyy-MM-dd').format(DateTime.now());
+    String convertedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     var trips = await _db.query('trip',
         where: 'userID=? AND startingDate<=? AND endingDate>=?',
         whereArgs: [userId, convertedDate, convertedDate]);
@@ -225,7 +225,7 @@ class DatabaseHelper {
     List<TripModal> tripsList = [];
 
     // DateTime currentDate = DateTime.now();
-    String convertedDate =DateFormat('yyyy-MM-dd').format(DateTime.now());
+    String convertedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     List trips = await _db.query('trip',
         where: 'userID=? AND startingDate>?',
         whereArgs: [userId, convertedDate]);
@@ -252,7 +252,7 @@ class DatabaseHelper {
     List<TripModal> tripsList = [];
 
     // DateTime currentDate = DateTime.now();
-    String convertedDate =DateFormat('yyyy-MM-dd').format(DateTime.now());
+    String convertedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     List trips = await _db.query('trip',
         where: 'userID=? AND endingDate<?', whereArgs: [userId, convertedDate]);
 
@@ -455,5 +455,17 @@ class DatabaseHelper {
       where: 'tripID = ? AND images = ?',
       whereArgs: [tripId, imagePath],
     );
+  }
+  
+  //update Profile Picture 
+  Future<void> updateProfilePicture(int userId, String imagePath) async {
+    await _db.update('user', {'image': imagePath},
+        where: 'id = ?', whereArgs: [userId]);
+  }
+
+  Future<Map<String, dynamic>> getLogedProfile() async {
+    List<Map<String, dynamic>> map =
+        await _db.query('user', where: 'isLogin = 1');
+    return map.first;
   }
 }

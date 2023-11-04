@@ -24,9 +24,10 @@ class _MyDropdownMenuState extends State<MyDropdownMenu> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Container(
-      height: 50,
-      width: 360,
+      height: screenSize.height * 0.06,
       decoration: BoxDecoration(
           border: Border.all(width: 1, color: primaryColor),
           borderRadius: BorderRadius.circular(6)),

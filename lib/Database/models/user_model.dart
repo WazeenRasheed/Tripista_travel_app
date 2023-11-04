@@ -3,7 +3,7 @@ class UserModal {
   final String name;
   final String mail;
   final String password;
-  late final String? image;
+  String? image;
 
   UserModal(
       {required this.name,

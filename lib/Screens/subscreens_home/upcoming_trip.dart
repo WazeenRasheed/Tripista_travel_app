@@ -174,7 +174,7 @@ class _UpcomingTripScreenState extends State<UpcomingTripScreen> {
             SizedBox(
               height: screenSize.height * 0.01,
             ),
-            Divider(),
+            Divider(color: accentColor2,),
             SizedBox(
               height: screenSize.height * 0.01,
             ),
@@ -198,12 +198,14 @@ class _UpcomingTripScreenState extends State<UpcomingTripScreen> {
                         child: Column(
                           children: [
                             CircleAvatar(
-                              maxRadius: 22,
-                              child: Text(
-                                companion.name[0],
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ),
+                                  maxRadius: 22,
+                                  backgroundColor: Colors.blueGrey[700],
+                                  child: Text(
+                                    companion.name[0],
+                                    style: TextStyle(
+                                        fontSize: 20, color: backgroundColor),
+                                  ),
+                                ),
                             SizedBox(
                               height: screenSize.height * 0.006,
                             ),

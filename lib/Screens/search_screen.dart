@@ -79,7 +79,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: Icon(Icons.cancel, size: 22)),
                       contentPadding: //textfield size
                           EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                      hintText: 'Search',
+                      hintText: 'Search trips',
                       hintStyle: TextStyle(color: Colors.black54),
                       fillColor: backgroundColor,
                       filled: true,

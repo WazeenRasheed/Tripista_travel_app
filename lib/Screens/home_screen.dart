@@ -54,13 +54,36 @@ class _HomeScreenState extends State<HomeScreen> {
                 // profile pic AND name
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  leading: CircleAvatar(
-                    maxRadius: 23,
-                    backgroundImage: FileImage(File(widget.user.image!)),
+                  leading: FutureBuilder(
+                    future: DatabaseHelper.instance.getLogedProfile(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text("Error ${snapshot.error}");
+                      }
+                      final user = snapshot.data;
+                      return CircleAvatar(
+                        maxRadius: 23,
+                        backgroundImage: FileImage(File(user?['image'])),
+                      );
+                    },
                   ),
-                  title: Text(
-                    'Hi, ${widget.user.name}',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  title: FutureBuilder(
+                    future: DatabaseHelper.instance.getLogedProfile(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text("Error ${snapshot.error}");
+                      }
+                      final user = snapshot.data;
+                      return Text(
+                        'Hi, ${user?['name']}',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                      );
+                    },
                   ),
                 ),
                 SizedBox(height: screenSize.height * 0.025),
@@ -152,20 +175,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                 ),
                               ),
-                              SizedBox(
-                                height: screenSize.height * 0.025,
-                                child: SmoothPageIndicator(
-                                  controller: _upcomingPageController,
-                                  count: trips.length,
-                                  effect: WormEffect(
-                                    spacing: 5,
-                                    dotWidth: 7,
-                                    dotHeight: 7,
-                                    activeDotColor: primaryColor,
-                                    dotColor: accentColor.withOpacity(0.6),
-                                  ),
-                                ),
-                              ),
+                              trips.length > 1
+                                  ? SizedBox(
+                                      height: screenSize.height * 0.025,
+                                      child: SmoothPageIndicator(
+                                        controller: _upcomingPageController,
+                                        count: trips.length,
+                                        effect: WormEffect(
+                                          spacing: 5,
+                                          dotWidth: 7,
+                                          dotHeight: 7,
+                                          activeDotColor: primaryColor,
+                                          dotColor:
+                                              accentColor.withOpacity(0.6),
+                                        ),
+                                      ))
+                                  : SizedBox()
                             ],
                           );
                   },
@@ -223,20 +248,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                 ),
                               ),
-                              SizedBox(
-                                height: screenSize.height * 0.025,
-                                child: SmoothPageIndicator(
-                                  controller: _recentPageController,
-                                  count: trips.length,
-                                  effect: WormEffect(
-                                    spacing: 5,
-                                    dotWidth: 7,
-                                    dotHeight: 7,
-                                    activeDotColor: primaryColor,
-                                    dotColor: accentColor.withOpacity(0.6),
-                                  ),
-                                ),
-                              ),
+                              trips.length > 1
+                                  ? SizedBox(
+                                      height: screenSize.height * 0.025,
+                                      child: SmoothPageIndicator(
+                                        controller: _recentPageController,
+                                        count: trips.length,
+                                        effect: WormEffect(
+                                          spacing: 5,
+                                          dotWidth: 7,
+                                          dotHeight: 7,
+                                          activeDotColor: primaryColor,
+                                          dotColor:
+                                              accentColor.withOpacity(0.6),
+                                        ),
+                                      ))
+                                  : SizedBox()
                             ],
                           );
                   },

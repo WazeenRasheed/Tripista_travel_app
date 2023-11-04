@@ -90,14 +90,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   //text fields
                   myTextField(
                     controller: nameController,
-                    hintText: 'Enter your username',
+                    labelText: 'Enter your username',
                   ),
                   SizedBox(
                     height: screenSize.height * 0.018,
                   ),
                   myTextField(
                     controller: passwordController,
-                    hintText: 'Enter your password',
+                    labelText: 'Enter your password',
                     obscureText: true,
                   ),
                   SizedBox(

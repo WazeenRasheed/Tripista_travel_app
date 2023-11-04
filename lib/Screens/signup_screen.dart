@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../Components/custom_button.dart';
 import '../Components/custom_textfield.dart';
 import '../Components/logo.dart';
@@ -82,7 +81,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     //name textField
                     myTextField(
                       controller: nameController,
-                      hintText: 'Enter your username',
+                      labelText: 'Enter your username',
                       validation: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Username required';
@@ -99,7 +98,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     //mail textField
                     myTextField(
                       controller: mailController,
-                      hintText: 'Enter your email',
+                      labelText: 'Enter your email',
                       keyboardType: TextInputType.emailAddress,
                       validation: (value) {
                         if (value == null || value.isEmpty) {
@@ -117,7 +116,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     //pwd textField
                     myTextField(
                       controller: passwordController,
-                      hintText: 'Enter your password',
+                      labelText: 'Enter your password',
                       obscureText: true,
                       validation: (value) {
                         if (value == null || value.isEmpty) {
@@ -135,7 +134,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     //confirm pwd textfield
                     myTextField(
                       controller: confirmPwdController,
-                      hintText: 'Confirm password',
+                      labelText: 'Confirm password',
                       obscureText: true,
                       validation: (value) {
                         if (value == null || value.isEmpty) {

@@ -19,20 +19,7 @@ class ImageViewScreen extends StatelessWidget {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
-        elevation: 1,
-        title: Text(
-          'Photo',
-          style: TextStyle(color: primaryColor),
-        ),
-        leading: InkWell(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: primaryColor,
-          ),
-        ),
+        elevation: 0,
         actions: [
           IconButton(
             onPressed: () {
