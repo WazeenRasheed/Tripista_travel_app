@@ -76,6 +76,11 @@ class MySettingsList extends StatelessWidget {
                   onPressed: () {
                     DatabaseHelper.instance.deleteAllTrips(userData.id!);
                     Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('All your data has been cleared'),
+                      behavior: SnackBarBehavior.floating,
+                      duration: Duration(seconds: 1),
+                    ));
                   },
                 );
                 break;

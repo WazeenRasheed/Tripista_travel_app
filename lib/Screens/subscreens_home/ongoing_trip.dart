@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import '../../Components/custom_dialog.dart';
 import '../../Components/styles.dart';
 import '../../Database/database_functions.dart';
 import '../../Database/models/trip_model.dart';
@@ -62,7 +61,23 @@ class OngoingTripScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.red),
                     ),
                     onTap: () async {
-                      _deleteDialog(context);
+                      customDialog(
+                        context: context,
+                        text: 'Delete your trip?',
+                        subText:
+                            "This ongoing trip data will be deleted on this device",
+                        signOrClear: 'Delete',
+                        onPressed: () async {
+                          await DatabaseHelper.instance.deleteTrip(trip.id!);
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  bottomNavigationBar(userdata: user),
+                            ),
+                            (route) => false,
+                          );
+                        },
+                      );
                     },
                   ),
                 ],
@@ -102,51 +117,17 @@ class OngoingTripScreen extends StatelessWidget {
                     user: user,
                     trip: trip,
                   ),
-                  MediaTab(trip: trip,),
-                  ExpenseTab(trip: trip,)
+                  MediaTab(
+                    trip: trip,
+                  ),
+                  ExpenseTab(
+                    trip: trip,
+                  )
                 ]),
               )
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Future<void> _deleteDialog(BuildContext context) async {
-    DatabaseHelper.instance.getOnGoingTrip(user.id!);
-    showDialog(
-      context: context,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: Column(
-          children: [
-            Text("Delete your trip?"),
-            Text(
-              "Any drafts that you've saved will be deleted on this device",
-              style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.normal),
-            )
-          ],
-        ),
-        actions: [
-          CupertinoButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text("Cancel"),
-          ),
-          CupertinoButton(
-            onPressed: () async {
-              await DatabaseHelper.instance.deleteTrip(trip.id!);
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                  builder: (context) => (bottomNavigationBar(userdata: user)),
-                ),
-                (route) => false,
-              );
-            },
-            child: Text("Delete", style: TextStyle(color: Colors.red)),
-          ),
-        ],
       ),
     );
   }

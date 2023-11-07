@@ -1,3 +1,4 @@
+// ignore_for_file: unnecessary_null_comparison
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../Components/styles.dart';
@@ -158,48 +159,61 @@ class DetailTab extends StatelessWidget {
               Container(
                 height: screenSize.height * 0.1,
                 width: screenSize.width * 0.9,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: trip.companions.length,
-                  itemBuilder: (context, index) {
-                    final companion = trip.companions[index];
-                    return Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 12, 20, 0),
-                          child: Column(
+                child: trip.companions != null && trip.companions.isNotEmpty
+                    ? ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: trip.companions.length,
+                        itemBuilder: (context, index) {
+                          final companion = trip.companions[index];
+                          return Row(
                             children: [
-                              GestureDetector(
-                                onTap: () async {
-                                  final Uri url = Uri(
-                                      scheme: 'tel', path: companion.number);
-                                  await launchUrl(url);
-                                },
-                                child: CircleAvatar(
-                                  maxRadius: 22,
-                                  backgroundColor: Colors.blueGrey[700],
-                                  child: Text(
-                                    companion.name[0],
-                                    style: TextStyle(
-                                        fontSize: 20, color: backgroundColor),
-                                  ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 12, 20, 0),
+                                child: Column(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        final Uri url = Uri(
+                                            scheme: 'tel',
+                                            path: companion.number);
+                                        await launchUrl(url);
+                                      },
+                                      child: CircleAvatar(
+                                        maxRadius: 22,
+                                        backgroundColor: Colors.blueGrey[700],
+                                        child: Text(
+                                          companion.name[0],
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: backgroundColor),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: screenSize.height * 0.006,
+                                    ),
+                                    Text(
+                                      companion.name,
+                                      style: TextStyle(fontSize: 13),
+                                    )
+                                  ],
                                 ),
                               ),
-                              SizedBox(
-                                height: screenSize.height * 0.006,
-                              ),
-                              Text(
-                                companion.name,
-                                style: TextStyle(fontSize: 13),
-                              )
                             ],
-                          ),
+                          );
+                        },
+                      )
+                    : Column(
+                      children: [
+                        SizedBox(height: screenSize.height * 0.02,),
+                        Text(
+                          'No companions available.',
+                          style: TextStyle(color: accentColor3),
                         ),
                       ],
-                    );
-                  },
-                ),
+                    ),
               ),
             ],
           ),

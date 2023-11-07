@@ -6,7 +6,7 @@ Map<String, dynamic> iconData = {
   'Flight': Icons.flight,
   'Car ': Icons.directions_car_rounded,
   'Train': Icons.train_rounded,
-  'Bike': Icons.directions_bike_rounded,
+  'Bike  ': Icons.directions_bike_rounded,
   'Ship': Icons.directions_boat,
   'Other': Icons.commute
 };
@@ -29,7 +29,8 @@ class MyChoiceChip extends StatefulWidget {
     Icon(Icons.commute),
   ];
 
-  MyChoiceChip({Key? key}) : super(key: key);
+  MyChoiceChip({Key? key, this.selectedTransport}) : super(key: key);
+  final String? selectedTransport;
 
   @override
   State<MyChoiceChip> createState() => _MyChoiceChipState();
@@ -37,6 +38,13 @@ class MyChoiceChip extends StatefulWidget {
 
 class _MyChoiceChipState extends State<MyChoiceChip> {
   int? _value;
+
+  void initState() {
+    super.initState();
+    if (widget.selectedTransport != null) {
+      _value = widget.choices.indexOf(widget.selectedTransport!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

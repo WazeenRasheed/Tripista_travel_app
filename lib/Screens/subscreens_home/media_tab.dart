@@ -89,18 +89,7 @@ class _MediaTabState extends State<MediaTab> {
                 (index) {
                   final imagePath = selectedImages[index].path;
 
-                  return
-                      // GestureDetector(
-                      //   onTap: () {
-                      //     Navigator.of(context).push(MaterialPageRoute(
-                      //         builder: (context) => ImageViewScreen(
-                      //               imagepath: imagePath,
-                      //               id: widget.trip.id!,
-                      //             )));
-                      //             setState(() {
-                      //             });
-                      //   },
-                      GestureDetector(
+                  return GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => ImageViewScreen(
@@ -108,7 +97,7 @@ class _MediaTabState extends State<MediaTab> {
                               .map((image) => image.path)
                               .toList(),
                           initialIndex: index,
-                          id: widget.trip.id!, 
+                          id: widget.trip.id!,
                         ),
                       ));
                     },
@@ -150,7 +139,7 @@ class _MediaTabState extends State<MediaTab> {
                     },
                     child: Icon(Icons.save_outlined,
                         size: 21, color: primaryColor)),
-              ], 
+              ],
             ),
             SizedBox(
               height: screenSize.height * 0.015,

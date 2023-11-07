@@ -1,10 +1,12 @@
 // ignore_for_file: unnecessary_null_comparison
 import 'package:flutter/material.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
+import 'package:tripista/Database/database_functions.dart';
 
 import '../../Components/styles.dart';
 
 List<Map<String, dynamic>> companionList = [];
+List<Map<String, dynamic>> updatedCompanions = [];
 
 class MyCompanion extends StatelessWidget {
   final String text;
@@ -68,6 +70,12 @@ class MyCompanion extends StatelessWidget {
           "name": CompanionName,
           "number": CompanionNumber,
         });
+        if (CompanionName.isNotEmpty && CompanionNumber.isNotEmpty) {
+          updatedCompanions.add({
+            "name": CompanionName,
+            "number": CompanionNumber,
+          });
+        }
 
         print('$CompanionName==$CompanionNumber');
         print('added ${companionList.length}');
@@ -81,11 +89,12 @@ class MyCompanion extends StatelessWidget {
 
   Future<dynamic> showCompanions() async {
     showModalBottomSheet(
+      showDragHandle: true,
       backgroundColor: Color.fromARGB(255, 207, 207, 207),
       context: context,
       builder: (context) {
         return Container(
-          margin: EdgeInsets.all(10),
+          margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
           child: StatefulBuilder(
             builder: (context, setState) {
               return ListView.separated(
@@ -98,14 +107,15 @@ class MyCompanion extends StatelessWidget {
                       companion.containsKey("name") &&
                       companion.containsKey("number")) {
                     return Container(
-                      height: 80,
+                      height: 70,
                       decoration: BoxDecoration(
                           color: Color.fromARGB(239, 255, 255, 255),
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(20)),
                       child: ListTile(
                         trailing: IconButton(
                             onPressed: () {
                               setState(() {
+                                DatabaseHelper.instance.deleteCompanion(companion['id']);
                                 companionList.removeAt(index);
                               });
                             },

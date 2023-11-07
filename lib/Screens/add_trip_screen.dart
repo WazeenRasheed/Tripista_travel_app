@@ -46,11 +46,12 @@ class _AddTripScreenState extends State<AddTripScreen> {
       endingDateController.text = tripData.endingDate;
       coverPic = File(tripData.coverPic!);
 
-      selectedTransport = widget.tripData!.transport;
-      selectedTravelPurpose = widget.tripData!.travelPurpose;
+      selectedTransport = tripData.transport;
+      selectedTravelPurpose = tripData.travelPurpose;
 
       companionList = tripData.companions.map((companion) {
         return {
+          'id': companion.id,
           "name": companion.name,
           "number": companion.number,
         };
@@ -181,7 +182,9 @@ class _AddTripScreenState extends State<AddTripScreen> {
                 ),
 
                 //transport type
-                MyChoiceChip(),
+                MyChoiceChip(
+                  selectedTransport: selectedTransport,
+                ),
                 SizedBox(
                   height: screenSize.height * 0.018,
                 ),
@@ -193,7 +196,7 @@ class _AddTripScreenState extends State<AddTripScreen> {
                 ),
                 MyDropdownMenu(
                   items: ['Business', 'Entertainment', 'Family', 'Other'],
-                  initialValue: 'Business',
+                  initialValue: selectedTravelPurpose ?? 'Business',
                 ),
                 SizedBox(
                   height: screenSize.height * 0.018,
@@ -242,7 +245,6 @@ class _AddTripScreenState extends State<AddTripScreen> {
           SnackBar(
             content: Text('Please add image before finishig the form.'),
             behavior: SnackBarBehavior.floating,
-            // margin: EdgeInsets.all(20),
           ),
         );
         return;
@@ -274,12 +276,16 @@ class _AddTripScreenState extends State<AddTripScreen> {
       print('data is $trip');
 
       if (widget.tripData != null) {
-        await DatabaseHelper.instance.updateTrip(trip);
+        await DatabaseHelper.instance.updateTrip(trip, updatedCompanions);
       } else {
         await DatabaseHelper.instance.addTrip(trip, companionList);
       }
 
       coverPic = null;
+      selectedTravelPurpose = null;
+      selectedTransport = null;
+      companionList.clear();
+      updatedCompanions.clear();
 
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(

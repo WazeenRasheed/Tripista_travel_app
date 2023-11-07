@@ -1,8 +1,8 @@
 class UserModal {
   int? id;
-  final String name;
-  final String mail;
-  final String password;
+  String name;
+  String mail;
+  String password;
   String? image;
 
   UserModal(

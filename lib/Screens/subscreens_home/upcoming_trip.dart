@@ -1,6 +1,7 @@
-// ignore_for_file: must_be_immutable
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: must_be_immutable, unnecessary_null_comparison
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../../Components/custom_dialog.dart';
 import '../../Components/styles.dart';
 import '../../Database/database_functions.dart';
 import '../../Database/models/trip_model.dart';
@@ -71,7 +72,24 @@ class _UpcomingTripScreenState extends State<UpcomingTripScreen> {
                     style: TextStyle(color: Colors.red),
                   ),
                   onTap: () async {
-                    _deleteDialog(context);
+                    customDialog(
+                      context: context,
+                      text: 'Delete your trip?',
+                      subText:
+                          "This upcoming trip data will be deleted on this device",
+                      signOrClear: 'Delete',
+                      onPressed: () async {
+                        await DatabaseHelper.instance
+                            .deleteTrip(widget.trip.id!);
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                bottomNavigationBar(userdata: widget.user),
+                          ),
+                          (route) => false,
+                        );
+                      },
+                    );
                   },
                 ),
               ],
@@ -174,7 +192,9 @@ class _UpcomingTripScreenState extends State<UpcomingTripScreen> {
             SizedBox(
               height: screenSize.height * 0.01,
             ),
-            Divider(color: accentColor2,),
+            Divider(
+              color: accentColor2,
+            ),
             SizedBox(
               height: screenSize.height * 0.01,
             ),
@@ -185,83 +205,66 @@ class _UpcomingTripScreenState extends State<UpcomingTripScreen> {
             Container(
               height: screenSize.height * 0.1,
               width: screenSize.width * 0.9,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: widget.trip.companions.length,
-                itemBuilder: (context, index) {
-                  final companion = widget.trip.companions[index];
-                  return Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 12, 20, 0),
-                        child: Column(
+              child: widget.trip.companions != null &&
+                      widget.trip.companions.isNotEmpty
+                  ? ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: widget.trip.companions.length,
+                      itemBuilder: (context, index) {
+                        final companion = widget.trip.companions[index];
+                        return Row(
                           children: [
-                            CircleAvatar(
-                                  maxRadius: 22,
-                                  backgroundColor: Colors.blueGrey[700],
-                                  child: Text(
-                                    companion.name[0],
-                                    style: TextStyle(
-                                        fontSize: 20, color: backgroundColor),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 12, 20, 0),
+                              child: Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () async {
+                                      final Uri url = Uri(
+                                          scheme: 'tel',
+                                          path: companion.number);
+                                      await launchUrl(url);
+                                    },
+                                    child: CircleAvatar(
+                                      maxRadius: 22,
+                                      backgroundColor: Colors.blueGrey[700],
+                                      child: Text(
+                                        companion.name[0],
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: backgroundColor),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                            SizedBox(
-                              height: screenSize.height * 0.006,
+                                  SizedBox(
+                                    height: screenSize.height * 0.006,
+                                  ),
+                                  Text(
+                                    companion.name,
+                                    style: TextStyle(fontSize: 13),
+                                  )
+                                ],
+                              ),
                             ),
-                            Text(
-                              companion.name,
-                              style: TextStyle(fontSize: 13),
-                            )
                           ],
+                        );
+                      },
+                    )
+                  : Column(
+                      children: [
+                        SizedBox(
+                          height: screenSize.height * 0.02,
                         ),
-                      ),
-                    ],
-                  );
-                },
-              ),
+                        Text(
+                          'No companions available.',
+                          style: TextStyle(color: accentColor3),
+                        ),
+                      ],
+                    ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Future<void> _deleteDialog(BuildContext context) async {
-    DatabaseHelper.instance.getUpcomingTrip(widget.user.id!);
-    showDialog(
-      context: context,
-      builder: (ctx) => CupertinoAlertDialog(
-        title: Column(
-          children: [
-            Text("Delete your trip?"),
-            Text(
-              "Any drafts that you've saved will be deleted on this device",
-              style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.normal),
-            )
-          ],
-        ),
-        actions: [
-          CupertinoButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text("Cancel"),
-          ),
-          CupertinoButton(
-            onPressed: () async {
-              await DatabaseHelper.instance.deleteTrip(widget.trip.id!);
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                  builder: (context) =>
-                      (bottomNavigationBar(userdata: widget.user)),
-                ),
-                (route) => false,
-              );
-            },
-            child: Text("Delete", style: TextStyle(color: Colors.red)),
-          ),
-        ],
       ),
     );
   }

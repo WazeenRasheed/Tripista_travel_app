@@ -246,7 +246,6 @@ class _SignupScreenState extends State<SignupScreen> {
 
   //Email validation
   bool isEmailValid(String email) {
-    // Regular expression pattern for email validation
     String pattern = r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$';
     RegExp regExp = RegExp(pattern);
     return regExp.hasMatch(email);

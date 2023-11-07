@@ -32,6 +32,39 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
     'password',
   ];
 
+  updateProfilePicture(File imageFile) async {
+    int userId = widget.user.id!;
+    String imagePath = imageFile.path;
+    await DatabaseHelper.instance.updateUserInfo('image', imagePath, userId);
+    setState(() {
+      image = imageFile;
+    });
+  }
+
+  void updateUsername(String newName) async {
+    await DatabaseHelper.instance
+        .updateUserInfo('name', newName, widget.user.id!);
+    setState(() {
+      widget.user.name = newName;
+    });
+  }
+
+  void updateMail(String newMail) async {
+    await DatabaseHelper.instance
+        .updateUserInfo('mail', newMail, widget.user.id!);
+    setState(() {
+      widget.user.mail = newMail;
+    });
+  }
+
+  void updatePassword(String newPassword) async {
+    await DatabaseHelper.instance
+        .updateUserInfo('password', newPassword, widget.user.id!);
+    setState(() {
+      widget.user.password = newPassword;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<String> subtitle = [
@@ -113,20 +146,33 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
                       titles[index],
                       style: TextStyle(color: primaryColor, fontSize: 13),
                     ),
-                    subtitle: Text(
-                      subtitle[index],
-                      style: TextStyle(
-                          color: primaryColor,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w500),
-                    ),
+                    subtitle: index == 2
+                        ? Text(
+                            // hide password with * and showing last 3 letter
+                            '*' * (subtitle[index].length - 3) +
+                                subtitle[index]
+                                    .substring(subtitle[index].length - 3),
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500),
+                          )
+                        : Text(
+                            subtitle[index],
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500),
+                          ),
                     trailing: index == 0
                         ? GestureDetector(
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => EditUsernameScreen(),
+                                  builder: (context) => EditUsernameScreen(
+                                    editUsername: updateUsername,
+                                  ),
                                 ),
                               );
                             },
@@ -142,7 +188,8 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => EditEmailScreen(),
+                                      builder: (context) =>
+                                          EditEmailScreen(editMail: updateMail),
                                     ),
                                   );
                                 },
@@ -157,7 +204,9 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) {
-                                      return EditPasswordScreen();
+                                      return EditPasswordScreen(
+                                          user: widget.user,
+                                          changePassword: updatePassword);
                                     },
                                   ));
                                 },
@@ -207,6 +256,12 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
                           GestureDetector(
                             onTap: () async {
                               Navigator.of(context).pop();
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content:
+                                    Text("Profile photo updated successfully"),
+                                behavior: SnackBarBehavior.floating,
+                              ));
                               final pickedImage = await imagePicker.pickImage(
                                 source: ImageSource.camera,
                               );
@@ -214,9 +269,7 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
                                 return;
                               }
                               final imageFile = File(pickedImage.path);
-                              setState(() {
-                                image = imageFile;
-                              });
+                              updateProfilePicture(imageFile);
                             },
                             child: CircleAvatar(
                               backgroundColor: primaryColor,
@@ -243,6 +296,12 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
                           GestureDetector(
                             onTap: () async {
                               Navigator.of(context).pop();
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content:
+                                    Text("Profile photo updated successfully"),
+                                behavior: SnackBarBehavior.floating,
+                              ));
                               final pickedImage = await imagePicker.pickImage(
                                 source: ImageSource.gallery,
                               );
@@ -250,9 +309,7 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
                                 return;
                               }
                               final imageFile = File(pickedImage.path);
-                              setState(() {
-                                image = imageFile;
-                              });
+                              updateProfilePicture(imageFile);
                             },
                             child: CircleAvatar(
                               backgroundColor: primaryColor,
@@ -280,14 +337,5 @@ class _AccountInfoScreenState extends State<AccountInfoScreen> {
         );
       },
     );
-  }
-
-  updateProfilePicture(File imageFile) async {
-    int userId = widget.user.id!;
-    String imagePath = imageFile.path;
-    await DatabaseHelper.instance.updateProfilePicture(userId, imagePath);
-    setState(() {
-      image = imageFile;
-    });
   }
 }

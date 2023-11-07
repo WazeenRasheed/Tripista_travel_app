@@ -1,7 +1,8 @@
-// ignore_for_file: unnecessary_null_comparison, invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: unnecessary_null_comparison, invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member, unused_local_variable
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:tripista/Widgets/addtrip_page_widgets/companions.dart';
 import 'models/companion_model.dart';
 import 'models/expense_model.dart';
 import 'models/trip_model.dart';
@@ -93,7 +94,7 @@ class DatabaseHelper {
     print(values);
   }
 
-//validate User when login....................................
+//validate User when login
   validateUser(String username, String password) async {
     final List<Map<String, dynamic>> users = await _db.query(
       'user',
@@ -113,7 +114,7 @@ class DatabaseHelper {
     }
   }
 
-//checking name when signin if name already exists.....................
+//checking name when signin if name already exists
   Future<bool> checkIfNameExists(String name) async {
     final List users = await _db.query(
       'user',
@@ -123,7 +124,7 @@ class DatabaseHelper {
     return users.isNotEmpty;
   }
 
-//when user login make isLogin=1..........................................
+//when user login make isLogin=1
   getLoggedUser() async {
     final user = await _db.query('user', where: 'isLogin=1', limit: 1);
     if (user.length == 0) {
@@ -133,7 +134,7 @@ class DatabaseHelper {
     }
   }
 
-//when user signou make isLogin=0................................................
+//when user signou make isLogin=0
   signoutUser() async {
     final List<Map<String, dynamic>> user =
         await _db.query('user', where: 'isLogin = ?', whereArgs: [1], limit: 1);
@@ -147,7 +148,7 @@ class DatabaseHelper {
   //.....................................................................................
 
 //add trip
-  addTrip(TripModal value, List<Map<String, dynamic>> data) async {
+  addTrip(TripModal value, List<Map<String, dynamic>> companion) async {
     int id = await _db.rawInsert(
         'INSERT INTO trip (tripName,destination,budget,startingDate,endingDate,transport,travelPurpose,coverPic,notes,userID) VALUES (?,?,?,?,?,?,?,?,?,?)',
         [
@@ -163,10 +164,9 @@ class DatabaseHelper {
           value.userID
         ]);
 
-    for (var i = 0; i < data.length; i++) {
-      data != null ? data[i]['tripID'] = id.toString() : null;
-      addCompanions(data[i]);
-      print(data[i]);
+    for (var i = 0; i < companion.length; i++) {
+      companion != null ? companion[i]['tripID'] = id.toString() : null;
+      addCompanions(companion[i]);
     }
     getAllTrip();
 
@@ -287,40 +287,55 @@ class DatabaseHelper {
     }
   }
 
-  //update trip.......................................................
-  updateTrip(
-    TripModal trip,
-  ) async {
-    await _db.update(
+  // update trip.......................................................
+  updateTrip(TripModal trip, List<Map<String, dynamic>> companion) async {
+    int id = await _db.update(
       'trip',
       trip.toJson(), // Convert the TripModal object to a map.
       where: 'id = ?',
       whereArgs: [trip.id],
     );
+    for (var i = 0; i < companion.length; i++) {
+      companion != null ? companion[i]['tripID'] = trip.id.toString() : null;
+      addCompanions(companion[i]);
+    }
 
-    // updating balance when budget change
+    // updating balance when budget change when edit trip
     final expList = await getExpense(trip.id!);
     final exp = expList[0];
     final expense = Expenses(balance: trip.budget - exp.totalexpense!);
     updateExpense(trip.id!, expense);
   }
 
-//delete trip.......................................................
+// delete trip.......................................................
   deleteTrip(int tripId) async {
     await _db.rawDelete('DELETE FROM trip WHERE id = ?', [tripId]);
   }
 
   // delete all trips
   deleteAllTrips(int userId) async {
-    _db.delete('trip', where: 'userID = ?', whereArgs: [userId]);
+    await _db.delete('trip', where: 'userID = ?', whereArgs: [userId]);
   }
 
-  // .............................COMPANIONS functions...........................
-  //............................................................................
+// adding trip note
+  addNote(TripModal trip, String note) async {
+    await _db.update('trip', {'notes': note},
+        where: 'id = ?', whereArgs: [trip.id]);
+  }
+
+// .............................COMPANIONS functions...........................
+//............................................................................
 
 // add companions
   addCompanions(Map<String, dynamic> companion) async {
-    _db.insert('companions', companion);
+    companionList.clear();
+    updatedCompanions.clear();
+    await _db.insert('companions', companion);
+  }
+
+// delete companion
+  Future<void> deleteCompanion(int companionId) async {
+    await _db.rawDelete('DELETE FROM companions WHERE id = ?', [companionId]);
   }
 
 // get all companions
@@ -340,12 +355,6 @@ class DatabaseHelper {
       ),
     );
     return compList;
-  }
-
-  ////////// Adding Trip Note/////////
-  addNote(TripModal trip, String note) async {
-    await _db.update('trip', {'notes': note},
-        where: 'id = ?', whereArgs: [trip.id]);
   }
 
   // .............................Expense functions...........................
@@ -424,7 +433,7 @@ class DatabaseHelper {
     return map;
   }
 
-//.............................Image Functions...........................
+//.............................trip image Functions...........................
 //..........................................................................
 
 // Add images
@@ -456,13 +465,15 @@ class DatabaseHelper {
       whereArgs: [tripId, imagePath],
     );
   }
-  
-  //update Profile Picture 
-  Future<void> updateProfilePicture(int userId, String imagePath) async {
-    await _db.update('user', {'image': imagePath},
+//.............................Edit user info Functions...........................
+//..........................................................................
+
+  updateUserInfo(String columnName, String newValue, int userId) async {
+    await _db.update('user', {columnName: newValue},
         where: 'id = ?', whereArgs: [userId]);
   }
 
+  // update profile and username in home page
   Future<Map<String, dynamic>> getLogedProfile() async {
     List<Map<String, dynamic>> map =
         await _db.query('user', where: 'isLogin = 1');
