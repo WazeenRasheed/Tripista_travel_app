@@ -127,7 +127,32 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: screenSize.height * 0.03),
 
                 //Upcoming trips
-                HomeText(text: 'Upcoming trips'),
+                FutureBuilder(
+                  future:
+                      DatabaseHelper.instance.getUpcomingTrip(widget.user.id!),
+                  builder: (context, snapshot) {
+                    final List<TripModal>? trips = snapshot.data;
+                    return trips != null
+                        ? Row(
+                            children: [
+                              HomeText(text: 'Upcoming trips'),
+                              SizedBox(width: screenSize.width * 0.02),
+                              trips.length == 0
+                                  ? SizedBox()
+                                  : CircleAvatar(
+                                      maxRadius: 10,
+                                      backgroundColor: accentColor2,
+                                      child: Text(
+                                        '${trips.length}',
+                                        style: TextStyle(
+                                            color: accentColor3, fontSize: 12),
+                                      ),
+                                    )
+                            ],
+                          )
+                        : SizedBox();
+                  },
+                ),
                 SizedBox(height: screenSize.height * 0.02),
                 FutureBuilder(
                   future:
@@ -198,7 +223,32 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: screenSize.height * 0.03),
 
                 //Recent trips
-                HomeText(text: 'Recent trips'),
+                FutureBuilder(
+                  future:
+                      DatabaseHelper.instance.getRecentTrip(widget.user.id!),
+                  builder: (context, snapshot) {
+                    final List<TripModal>? trips = snapshot.data;
+                    return trips != null
+                        ? Row(
+                            children: [
+                              HomeText(text: 'Recent trips'),
+                              SizedBox(width: screenSize.width * 0.02),
+                              trips.length == 0
+                                  ? SizedBox()
+                                  : CircleAvatar(
+                                      maxRadius: 10,
+                                      backgroundColor: accentColor2,
+                                      child: Text(
+                                        '${trips.length}',
+                                        style: TextStyle(
+                                            color: accentColor3, fontSize: 12),
+                                      ),
+                                    )
+                            ],
+                          )
+                        : SizedBox();
+                  },
+                ),
                 SizedBox(height: screenSize.height * 0.02),
                 FutureBuilder(
                   future:
