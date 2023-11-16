@@ -169,8 +169,12 @@ class DetailTab extends StatelessWidget {
                           return Row(
                             children: [
                               Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(0, 12, 20, 0),
+                                padding: EdgeInsets.fromLTRB(
+                                  screenSize.width * 0.0,
+                                  screenSize.height * 0.015,
+                                  screenSize.width * 0.04,
+                                  screenSize.height * 0.0,
+                                ),
                                 child: Column(
                                   children: [
                                     GestureDetector(
@@ -206,14 +210,16 @@ class DetailTab extends StatelessWidget {
                         },
                       )
                     : Column(
-                      children: [
-                        SizedBox(height: screenSize.height * 0.02,),
-                        Text(
-                          'No companions available.',
-                          style: TextStyle(color: accentColor3),
-                        ),
-                      ],
-                    ),
+                        children: [
+                          SizedBox(
+                            height: screenSize.height * 0.02,
+                          ),
+                          Text(
+                            'No companions available.',
+                            style: TextStyle(color: accentColor3),
+                          ),
+                        ],
+                      ),
               ),
             ],
           ),

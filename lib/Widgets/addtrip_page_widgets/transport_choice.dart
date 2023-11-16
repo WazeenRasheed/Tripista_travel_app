@@ -51,7 +51,8 @@ class _MyChoiceChipState extends State<MyChoiceChip> {
     final screenSize = MediaQuery.of(context).size;
 
     return Wrap(
-      spacing: 8,
+      spacing: screenSize.width * 0.018,
+      runSpacing: screenSize.height * 0.005,
       children: List.generate(
         widget.choices.length,
         (int index) {
@@ -60,7 +61,12 @@ class _MyChoiceChipState extends State<MyChoiceChip> {
             width: screenSize.width * 0.287,
             child: ChoiceChip(
               showCheckmark: false,
-              padding: EdgeInsets.fromLTRB(25, 10, 25, 10),
+              padding: EdgeInsets.fromLTRB(
+                screenSize.width * 0.06,
+                screenSize.height * 0.013,
+                screenSize.width * 0.06,
+                screenSize.height * 0.013,
+              ),
               avatar: widget.icons[index],
               selectedColor: primaryColor,
               backgroundColor: backgroundColor,

@@ -21,6 +21,8 @@ class OngoingTripScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -86,7 +88,9 @@ class OngoingTripScreen extends StatelessWidget {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+          padding: EdgeInsets.symmetric(
+              horizontal: screenSize.width * 0.05,
+              vertical: screenSize.height * 0.01),
           child: Column(
             children: [
               OngoingContainer(
@@ -97,7 +101,7 @@ class OngoingTripScreen extends StatelessWidget {
               ),
               TabBar(
                   indicatorColor: primaryColor,
-                  padding: EdgeInsets.only(top: 10),
+                  padding: EdgeInsets.only(top: screenSize.height * 0.012),
                   indicatorSize: TabBarIndicatorSize.label,
                   labelColor: primaryColor,
                   tabs: [

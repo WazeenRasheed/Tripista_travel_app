@@ -35,7 +35,7 @@ class MyCompanion extends StatelessWidget {
             border: Border.all(width: 1, color: primaryColor),
             borderRadius: BorderRadius.circular(6)),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
+          padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.038),
           child: Row(
             children: [
               Icon(
@@ -88,13 +88,19 @@ class MyCompanion extends StatelessWidget {
   }
 
   Future<dynamic> showCompanions() async {
+    final Size screenSize = MediaQuery.of(context).size;
     showModalBottomSheet(
       showDragHandle: true,
       backgroundColor: Color.fromARGB(255, 207, 207, 207),
       context: context,
       builder: (context) {
         return Container(
-          margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
+          margin: EdgeInsets.fromLTRB(
+            screenSize.width * 0.03,
+            screenSize.height * 0.0,
+            screenSize.width * 0.03,
+            screenSize.height * 0.015,
+          ),
           child: StatefulBuilder(
             builder: (context, setState) {
               return ListView.separated(
@@ -107,7 +113,7 @@ class MyCompanion extends StatelessWidget {
                       companion.containsKey("name") &&
                       companion.containsKey("number")) {
                     return Container(
-                      height: 70,
+                      height: screenSize.height * 0.087,
                       decoration: BoxDecoration(
                           color: Color.fromARGB(239, 255, 255, 255),
                           borderRadius: BorderRadius.circular(20)),
@@ -115,7 +121,8 @@ class MyCompanion extends StatelessWidget {
                         trailing: IconButton(
                             onPressed: () {
                               setState(() {
-                                DatabaseHelper.instance.deleteCompanion(companion['id']);
+                                DatabaseHelper.instance
+                                    .deleteCompanion(companion['id']);
                                 companionList.removeAt(index);
                               });
                             },
@@ -132,7 +139,7 @@ class MyCompanion extends StatelessWidget {
                   }
                 },
                 separatorBuilder: (context, index) {
-                  return SizedBox(height: 10);
+                  return SizedBox(height: screenSize.height * 0.01);
                 },
                 itemCount: companionList.length,
               );

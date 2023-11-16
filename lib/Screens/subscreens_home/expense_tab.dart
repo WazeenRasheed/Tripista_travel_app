@@ -209,25 +209,29 @@ class _ExpenseTabState extends State<ExpenseTab> {
                     icon: Icons.restaurant_menu_rounded,
                     text: 'Food',
                     bgcolor: Colors.orange.shade100,
-                    iconColor: Colors.orange),
+                    iconColor: Colors.orange,
+                    context: context),
                 customGrid(
                     text: 'Transport',
                     amount: expense.transport!,
                     icon: Icons.directions,
                     bgcolor: Colors.blue.shade100,
-                    iconColor: Colors.blue),
+                    iconColor: Colors.blue,
+                    context: context),
                 customGrid(
                     text: 'Hotel',
                     amount: expense.hotel!,
                     icon: Icons.hotel_rounded,
                     bgcolor: Colors.purple.shade100,
-                    iconColor: Colors.purple),
+                    iconColor: Colors.purple,
+                    context: context),
                 customGrid(
                     text: 'Other',
                     amount: expense.other!,
                     icon: Icons.monetization_on,
                     bgcolor: Colors.green.shade100,
-                    iconColor: Colors.green)
+                    iconColor: Colors.green,
+                    context: context)
               ],
             );
           },

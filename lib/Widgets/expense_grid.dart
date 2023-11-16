@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import '../Components/styles.dart';
 
 Container customGrid(
-    {required String text,
+    {required BuildContext context,
+    required String text,
     required int amount,
     required IconData icon,
     required Color bgcolor,
     required Color iconColor}) {
+  final Size screenSize = MediaQuery.of(context).size;
   return Container(
-    height: 80,
+    // height: screenSize.height * 0.1,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(6),
       border: Border.all(color: accentColor),
@@ -18,7 +20,7 @@ Container customGrid(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 12),
+          padding: EdgeInsets.only(left: screenSize.width * 0.029),
           child: Row(
             children: [
               Text(text, style: TextStyle(fontSize: 16, color: primaryColor)),
@@ -31,21 +33,25 @@ Container customGrid(
                     size: 18,
                     color: iconColor,
                   )),
-              const SizedBox(width: 15)
+              SizedBox(width: screenSize.width * 0.035)
             ],
           ),
         ),
-        const Divider(
-            height: 18, indent: 13, endIndent: 13, color: accentColor2),
+        Divider(
+            height: screenSize.height * 0.02,
+            indent: 13,
+            endIndent: 13,
+            color: accentColor2),
         Padding(
-            padding: const EdgeInsets.only(top: 3, left: 12),
+            padding: EdgeInsets.only(
+                top: screenSize.height * 0.005, left: screenSize.width * 0.035),
             child: Text("₹ $amount",
                 style: TextStyle(
                     color: Colors.blueGrey[700],
                     fontSize: 16,
                     fontWeight: FontWeight.w900))),
-        const SizedBox(
-          height: 5,
+        SizedBox(
+          height: screenSize.height * 0.001,
         ),
       ],
     ),

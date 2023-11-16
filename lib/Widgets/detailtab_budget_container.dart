@@ -16,7 +16,7 @@ class BudgetContainer extends StatelessWidget {
       height: screenSize.height * 0.1277,
       width: screenSize.width * 0.425,
       child: Padding(
-        padding: const EdgeInsets.all(15),
+        padding: EdgeInsets.all(screenSize.height * 0.014),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

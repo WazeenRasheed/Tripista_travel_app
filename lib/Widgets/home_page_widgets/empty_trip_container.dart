@@ -23,7 +23,7 @@ class EmptyTripContainer extends StatelessWidget {
     final Size screenSize = MediaQuery.of(context).size;
 
     return Container(
-      height: screenSize.height * 0.19,
+      height: screenSize.height * 0.2,
       width: screenSize.width * 0.9,
       decoration: BoxDecoration(
         color: accentColor2,

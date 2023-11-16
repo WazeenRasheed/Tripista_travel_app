@@ -57,7 +57,7 @@ class OngoingContainer extends StatelessWidget {
               maxRadius: 13,
               child: Icon(
                 iconData[trip.transport],
-                size: 17,
+                size: 16,
                 color: primaryColor,
               ),
             ),

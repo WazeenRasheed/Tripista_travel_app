@@ -82,8 +82,8 @@ class _MediaTabState extends State<MediaTab> {
               height: screenSize.height * 0.015,
             ),
             Wrap(
-              spacing: 10.0,
-              runSpacing: 10.0,
+              spacing: screenSize.width * 0.027,
+              runSpacing: screenSize.height * 0.0135,
               children: List.generate(
                 selectedImages.length,
                 (index) {
@@ -145,7 +145,9 @@ class _MediaTabState extends State<MediaTab> {
               height: screenSize.height * 0.015,
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenSize.width * 0.038,
+                  vertical: screenSize.height * 0.01),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
                   border: Border.all(width: 1, color: accentColor3)),
