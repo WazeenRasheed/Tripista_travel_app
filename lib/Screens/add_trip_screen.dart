@@ -272,8 +272,6 @@ class _AddTripScreenState extends State<AddTripScreen> {
         userID: userID,
         id: widget.tripData?.id,
       );
-      print('Trip Details');
-      print('data is $trip');
 
       if (widget.tripData != null) {
         await DatabaseHelper.instance.updateTrip(trip, updatedCompanions);

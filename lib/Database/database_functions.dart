@@ -91,7 +91,6 @@ class DatabaseHelper {
   getUser() async {
     userListNotifier.value.clear();
     final values = await _db.rawQuery('SELECT * FROM user'); //(* = columns)
-    print(values);
   }
 
 //validate User when login
@@ -328,8 +327,6 @@ class DatabaseHelper {
 
 // add companions
   addCompanions(Map<String, dynamic> companion) async {
-    companionList.clear();
-    updatedCompanions.clear();
     await _db.insert('companions', companion);
   }
 
@@ -452,8 +449,6 @@ class DatabaseHelper {
       where: 'tripID = ?',
       whereArgs: [tripId],
     );
-    print(result);
-
     return result.map((row) => row['images'] as String).toList();
   }
 
