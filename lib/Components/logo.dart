@@ -16,10 +16,10 @@ class Logo extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        Text(
-          'Tripista',
-          style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w900),
-        ),
+        // Text(
+        //   'Tripista',
+        //   style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w900),
+        // ),
       ],
     );
   }

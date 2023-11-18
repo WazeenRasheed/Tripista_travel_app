@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:tripista/Widgets/addtrip_page_widgets/companions.dart';
 import 'models/companion_model.dart';
 import 'models/expense_model.dart';
 import 'models/trip_model.dart';

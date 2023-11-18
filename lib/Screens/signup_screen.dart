@@ -50,8 +50,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 24, 0, 0),
-                      child: const Logo(imageHeight: 80, fontSize: 25),
+                      padding: const EdgeInsets.fromLTRB(12, 35, 0, 0),
+                      child: const Logo(imageHeight: 110, fontSize: 25),
                     ),
 
                     //profile picture

@@ -57,12 +57,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
             //image
             Container(
-              height: screenSize.height * 0.22,
+              height: screenSize.height * 0.2,
               width: screenSize.width * 0.9,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Logo(imageHeight: 120, fontSize: 33),
+                  const Logo(imageHeight: 150, fontSize: 33),
                 ],
               ),
             ),
